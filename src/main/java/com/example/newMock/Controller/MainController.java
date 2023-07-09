@@ -33,11 +33,10 @@ public class MainController {
         try {
             String currency, clientId = requestDTO.getClientId();
             BigDecimal maxLimit, balance;
-            //String currency;
             if (clientId.charAt(0) == '8') {
                 currency = "US";
                 maxLimit = new BigDecimal("2000.00");
-                balance = new BigDecimal(Math.round(Math.random() * 2000.00 ));
+                balance = new BigDecimal(Math.round(Math.random() * 2000.00));
             } else if (clientId.charAt(0) == '9') {
                 currency = "EU";
                 maxLimit = new BigDecimal("1000.00");
@@ -79,7 +78,6 @@ public class MainController {
         try {
             String currency, clientId = requestDTO.getClientId();
             BigDecimal maxLimit, balance;
-            //String currency;
             if (clientId.charAt(0) == '8') {
                 currency = "US";
                 maxLimit = new BigDecimal("2000.00");
