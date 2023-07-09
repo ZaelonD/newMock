@@ -33,6 +33,12 @@ public class MainController {
             if (clientId.charAt(0) == '8') {
                 currency = "US";
                 maxLimit = new BigDecimal("2000.00");
+            } else if (clientId.charAt(0) == '9') {
+                currency = "EU";
+                maxLimit = new BigDecimal("1000.00");
+            } else {
+                currency = "RUB";
+                maxLimit = new BigDecimal("10000.00");
             }
         }
     }
