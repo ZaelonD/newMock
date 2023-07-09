@@ -2,6 +2,8 @@ package com.example.newMock.Model;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @ToString
@@ -14,6 +16,6 @@ public class ResponseDTO {
     private String clientId;
     private String account;
     private String currency;
-    private String balance;
-    private String maxLimit;
+    private BigDecimal balance;
+    private BigDecimal maxLimit;
 }
