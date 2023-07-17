@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d6c1792-a567-4977-960e-8735f5631c5d" name="Changes" comment="home work">
+    <list default="true" id="2d6c1792-a567-4977-960e-8735f5631c5d" name="Changes" comment="homework">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/newMock/Controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/newMock/Controller/MainController.java" afterDir="false" />
     </list>
@@ -42,11 +42,13 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "e8edbfaa4bbec7b8c3fe4269a8eaf07a",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -74,7 +76,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1688888374038</updated>
-      <workItem from="1688888375559" duration="14518000" />
+      <workItem from="1688888375559" duration="15837000" />
+      <workItem from="1689594143090" duration="2990000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1688895640423</created>
@@ -104,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688904406877</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="homework">
+      <created>1688904924871</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1688904924871</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,6 +125,7 @@
     <MESSAGE value="first commit" />
     <MESSAGE value="second commit" />
     <MESSAGE value="home work" />
-    <option name="LAST_COMMIT_MESSAGE" value="home work" />
+    <MESSAGE value="homework" />
+    <option name="LAST_COMMIT_MESSAGE" value="homework" />
   </component>
 </project>

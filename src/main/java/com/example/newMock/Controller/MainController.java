@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
@@ -21,6 +22,8 @@ public class MainController {
     private final Logger log = LoggerFactory.getLogger(MainController.class);
     ObjectMapper mapper = new ObjectMapper();
     public long startTime = 0L;
+    BigDecimal maxLimit, balance;
+    String currency;
 
     @PostMapping(
             value = "/info/postBalances",
@@ -28,46 +31,8 @@ public class MainController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
 
-
     public Object postBalances(@RequestBody RequestDTO requestDTO) {
-        try {
-            String currency, clientId = requestDTO.getClientId();
-            BigDecimal maxLimit, balance;
-            if (clientId.charAt(0) == '8') {
-                currency = "US";
-                maxLimit = new BigDecimal("2000.00");
-                balance = new BigDecimal(Math.round(Math.random() * 2000.00));
-            } else if (clientId.charAt(0) == '9') {
-                currency = "EU";
-                maxLimit = new BigDecimal("1000.00");
-                balance = new BigDecimal(Math.round(Math.random() * 1000.00));
-            } else {
-                currency = "RUB";
-                maxLimit = new BigDecimal("10000.00");
-                balance = new BigDecimal(Math.round(Math.random() * 10000.00));
-            }
-            ResponseDTO responseDTO = new ResponseDTO();
-
-            responseDTO.setRqUID(requestDTO.getRqUID());
-            responseDTO.setClientId(requestDTO.getClientId());
-            responseDTO.setAccount(requestDTO.getAccount());
-            responseDTO.setCurrency(currency);
-            responseDTO.setBalance(balance);
-            responseDTO.setMaxLimit(maxLimit);
-
-            log.error("***** Запрос *****" + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestDTO));
-            log.error("***** Ответ *****" + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(responseDTO));
-
-            long pacing = ThreadLocalRandom.current().nextLong(100, 500);
-            long endTime = System.currentTimeMillis();
-            if (endTime - startTime < pacing) {
-                Thread.sleep(pacing - (endTime - startTime));
-            }
-
-            return responseDTO;
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        return getObject(requestDTO);
     }
 
     @GetMapping(
@@ -75,37 +40,55 @@ public class MainController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public Object getBalances(@RequestBody RequestDTO requestDTO) {
+        return getObject(requestDTO);
+    }
+
+    private Object getObject(@RequestBody RequestDTO requestDTO) {
         try {
-            String currency, clientId = requestDTO.getClientId();
-            BigDecimal maxLimit, balance;
-            if (clientId.charAt(0) == '8') {
-                currency = "US";
-                maxLimit = new BigDecimal("2000.00");
-                balance = new BigDecimal(Math.round(Math.random() * 2000.00));
-            } else if (clientId.charAt(0) == '9') {
-                currency = "EU";
-                maxLimit = new BigDecimal("1000.00");
-                balance = new BigDecimal(Math.round(Math.random() * 1000.00));
-            } else {
-                currency = "RUB";
-                maxLimit = new BigDecimal("10000.00");
-                balance = new BigDecimal(Math.round(Math.random() * 10000.00));
+            String clientId = requestDTO.getClientId();
+            switch (clientId.charAt(0)) {
+                case '8' -> {
+                    currency = "US";
+                    maxLimit = new BigDecimal("2000.00");
+                    balance = BigDecimal.valueOf(Math.random() * 2000.00);
+                }
+                case '9' -> {
+                    currency = "EU";
+                    maxLimit = new BigDecimal("1000.00");
+                    balance = BigDecimal.valueOf(Math.random() * 1000.00);
+                }
+                default -> {
+                    currency = "RUB";
+                    maxLimit = new BigDecimal("10000.00");
+                    balance = BigDecimal.valueOf(Math.random() * 10000.00);
+                }
             }
+            balance = balance.setScale(2, RoundingMode.DOWN);
             ResponseDTO responseDTO = new ResponseDTO();
-
-            responseDTO.setRqUID(requestDTO.getRqUID());
-            responseDTO.setClientId(requestDTO.getClientId());
-            responseDTO.setAccount(requestDTO.getAccount());
-            responseDTO.setCurrency(currency);
-            responseDTO.setBalance(balance);
-            responseDTO.setMaxLimit(maxLimit);
-
+            setData(responseDTO, requestDTO);
             log.error("***** Запрос *****" + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestDTO));
             log.error("***** Ответ *****" + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(responseDTO));
-
+            doPacing();
             return responseDTO;
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    private void doPacing() throws InterruptedException {
+        long pacing = ThreadLocalRandom.current().nextLong(100, 500);
+        long endTime = System.currentTimeMillis();
+        if (endTime - startTime < pacing) {
+            Thread.sleep(pacing - (endTime - startTime));
+        }
+    }
+
+    private void setData(ResponseDTO responseDTO, RequestDTO requestDTO) {
+        responseDTO.setRqUID(requestDTO.getRqUID());
+        responseDTO.setClientId(requestDTO.getClientId());
+        responseDTO.setAccount(requestDTO.getAccount());
+        responseDTO.setCurrency(currency);
+        responseDTO.setBalance(balance);
+        responseDTO.setMaxLimit(maxLimit);
     }
 }
